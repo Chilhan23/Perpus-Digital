@@ -4,56 +4,37 @@ Sistem informasi perpustakaan digital berbasis web yang dirancang untuk memudahk
 🚀 Fitur Utama
 
     Manajemen Buku: Pengelolaan data buku, kategori, dan stok secara real-time.
-
     Sistem Peminjaman: Alur peminjaman dan pengembalian buku yang terintegrasi.
-
     Dashboard Statistik: Ringkasan data statistik untuk admin dan pengguna.
-
     Autentikasi: Sistem login dan registrasi yang aman bagi pengguna.
-
     Pencarian Cepat: Memudahkan pencarian koleksi buku berdasarkan judul atau kategori.
 
 🛠️ Teknologi yang Digunakan
-
-    Framework: Laravel 11
-
+    Framework: Laravel 12
     Bahasa Pemrograman: PHP
-
     Styling: Tailwind CSS
-
     Database: MySQL
-
+    
 💻 Cara Instalasi
 
     Clone repository
-    Bash
-
     git clone https://github.com/chilhan23/perpus-digital.git
     cd perpus-digital
 
     Instal dependensi
-    Bash
-
     composer install
     npm install && npm run dev
 
     Konfigurasi environment
-
         Salin file .env.example menjadi .env
-
         Sesuaikan konfigurasi database di file .env
-    Bash
-
+        
     php artisan key:generate
 
     Migrasi database
-    Bash
-
     php artisan migrate --seed
 
     Jalankan aplikasi
-    Bash
-
     php artisan serve
 
 👤 Kontributor
