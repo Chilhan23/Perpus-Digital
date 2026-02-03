@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Peminjaman - PerpusDigi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    @include('layouts.Navbar')
+
+    <!-- Success/Error Notification -->
+    @if(session('success'))
+    <div x-data="{ show: true }" 
+         x-show="show" 
+         x-init="setTimeout(() => show = false, 5000)"
+         class="fixed top-24 right-4 z-50 max-w-sm">
+        <div class="bg-green-50 border-l-4 border-green-500 rounded-lg shadow-lg p-4 flex items-start gap-3">
+            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-sm text-green-700">{{ session('success') }}</p>
+        </div>
+    </div>
+    @endif
+
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-700 py-12">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+            <h1 class="text-4xl font-bold text-black mb-2">Kelola Peminjaman</h1>
+            <p class="text-black-100">Manage semua peminjaman buku perpustakaan</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 py-8">
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 border border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-slate-600 text-sm font-medium mb-1">Total Peminjaman</p>
+                        <h3 class="text-3xl font-bold text-slate-800">{{ $stats['total'] }}</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 border border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-slate-600 text-sm font-medium mb-1">Sedang Dipinjam</p>
+                        <h3 class="text-3xl font-bold text-slate-800">{{ $stats['active'] }}</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 border border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-slate-600 text-sm font-medium mb-1">Sudah Kembali</p>
+                        <h3 class="text-3xl font-bold text-slate-800">{{ $stats['returned'] }}</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 border border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-slate-600 text-sm font-medium mb-1">Terlambat</p>
+                        <h3 class="text-3xl font-bold text-slate-800">{{ $stats['overdue'] }}</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters & Search -->
+        <div class="bg-white rounded-lg shadow-md p-6 border border-slate-200 mb-6">
+            <form method="GET" action="{{ route('admin.borrows.index') }}" class="flex flex-col md:flex-row gap-4">
+                
+                <!-- Search -->
+                <div class="flex-1">
+                    <input type="text" 
+                           name="search" 
+                           value="{{ request('search') }}" 
+                           placeholder="Cari nama user atau judul buku..." 
+                           class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <!-- Filter Status -->
+                <select name="status" class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua Status</option>
+                    <option value="dipinjam" {{ request('status') == 'dipinjam' ? 'selected' : '' }}>Sedang Dipinjam</option>
+                    <option value="dikembalikan" {{ request('status') == 'dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                    <option value="terlambat" {{ request('status') == 'terlambat' ? 'selected' : '' }}>Terlambat</option>
+                </select>
+
+                <!-- Button Search -->
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                    Filter
+                </button>
+
+                <!-- Reset -->
+                <a href="{{ route('admin.borrows.index') }}" class="px-6 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors font-semibold text-center">
+                    Reset
+                </a>
+            </form>
+        </div>
+
+        <!-- Tabel Peminjaman -->
+        <div class="bg-white rounded-lg shadow-md border border-slate-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="text-left py-4 px-6 text-sm font-semibold text-slate-700">User</th>
+                            <th class="text-left py-4 px-6 text-sm font-semibold text-slate-700">Buku</th>
+                            <th class="text-left py-4 px-6 text-sm font-semibold text-slate-700">Tanggal Pinjam</th>
+                            <th class="text-left py-4 px-6 text-sm font-semibold text-slate-700">Harus Kembali</th>
+                            <th class="text-left py-4 px-6 text-sm font-semibold text-slate-700">Status</th>
+                            <th class="text-left py-4 px-6 text-sm font-semibold text-slate-700">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($borrows as $borrow)
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td class="py-4 px-6">
+                                <div>
+                                    <p class="font-semibold text-slate-800">{{ $borrow->user->name }}</p>
+                                    <p class="text-xs text-slate-500">{{ $borrow->user->email }}</p>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <div>
+                                    <p class="font-medium text-slate-800">{{ $borrow->book->judul }}</p>
+                                    <p class="text-xs text-slate-500">{{ $borrow->book->penulis }}</p>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 text-sm text-slate-600">
+                                {{ $borrow->tanggal_pinjam->format('d M Y') }}
+                            </td>
+                            <td class="py-4 px-6 text-sm text-slate-600">
+                                {{ $borrow->tanggal_kembali->format('d M Y') }}
+                                @if($borrow->status == 'dipinjam')
+                                    @php
+                                        $daysLeft = \Carbon\Carbon::parse($borrow->tanggal_kembali)->diffInDays(now(), false);
+                                    @endphp
+                                    @if($daysLeft < 0)
+                                        <span class="text-red-600 font-semibold">({{ abs($daysLeft) }} hari terlambat)</span>
+                                    @elseif($daysLeft <= 3)
+                                        <span class="text-orange-600 font-semibold">({{ $daysLeft }} hari lagi)</span>
+                                    @endif
+                                @endif
+                            </td>
+                            <td class="py-4 px-6">
+                                @if($borrow->status == 'dipinjam')
+                                    @if(\Carbon\Carbon::parse($borrow->tanggal_kembali)->isPast())
+                                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">Terlambat</span>
+                                    @else
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">Dipinjam</span>
+                                    @endif
+                                @elseif($borrow->status == 'dikembalikan')
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Dikembalikan</span>
+                                @else
+                                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">Terlambat (Rp {{ number_format($borrow->denda, 0, ',', '.') }})</span>
+                                @endif
+                            </td>
+                            <td class="py-4 px-6">
+                                <div class="flex gap-2">
+
+                                    @if($borrow->status == 'dipinjam')
+                                        <form action="{{ route('admin.borrows.return', $borrow) }}" method="POST" onsubmit="return confirm('Proses pengembalian buku ini?')">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold">
+                                                Kembalikan
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if ($borrow->status == 'dikembalikan')
+                                        <form action="{{ route('admin.borrows.destroy', $borrow) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus record ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-semibold">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                    @endif
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="py-12 text-center text-slate-600">
+                                Tidak ada data peminjaman
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if($borrows->hasPages())
+            <div class="p-6 border-t border-slate-200">
+                {{ $borrows->links() }}
+            </div>
+            @endif
+        </div>
+
+    </div>
+
+</body>
+</html>
