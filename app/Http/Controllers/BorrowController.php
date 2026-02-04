@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Borrow;
 use App\Models\Books;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -132,5 +133,12 @@ class BorrowController extends Controller
 
         $borrow->delete();
         return back()->with('success', 'Data peminjaman dihapus');
+    }
+
+   public function DownloadInvoice($id)
+    {
+    $borrow = Borrow::with(['user', 'book'])->findOrFail($id);
+    $pdf = Pdf::loadView('user.borrows.invoice', compact('borrow'));
+    return $pdf->download('Invoice-Peminjaman Buku Atas Nama '.$borrow->user->name.' .pdf');
     }
 }

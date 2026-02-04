@@ -173,6 +173,63 @@
 
 @include('layouts.Navbar')    
 
+@if(session('success'))
+<div x-data="{ show: true }" 
+     x-show="show" 
+     x-init="setTimeout(() => show = false, 5000)"
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0 transform translate-y-[-20px]"
+     x-transition:enter-end="opacity-100 transform translate-y-0"
+     x-transition:leave="transition ease-in duration-300"
+     x-transition:leave-start="opacity-100 transform translate-y-0"
+     x-transition:leave-end="opacity-0 transform translate-y-[-20px]"
+     class="fixed top-24 left-1/2 transform -translate-x-1/2 z-[60] w-full max-w-md px-4">
+    
+    <div class="bg-white border-l-4 border-green-500 shadow-2xl rounded-xl p-4 flex items-center gap-4">
+        <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <div class="flex-1">
+            <p class="text-sm font-bold text-gray-900">Berhasil!</p>
+            <p class="text-xs text-gray-600">{{ session('success') }}</p>
+        </div>
+        <button @click="show = false" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+@endif
+
+@if(session('error'))
+<div x-data="{ show: true }" 
+     x-show="show" 
+     x-init="setTimeout(() => show = false, 5000)"
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0 transform translate-y-[-20px]"
+     class="fixed top-24 left-1/2 transform -translate-x-1/2 z-[60] w-full max-w-md px-4">
+    
+    <div class="bg-white border-l-4 border-red-500 shadow-2xl rounded-xl p-4 flex items-center gap-4">
+        <div class="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+        <div class="flex-1">
+            <p class="text-sm font-bold text-gray-900">Gagal!</p>
+            <p class="text-xs text-gray-600">{{ session('error') }}</p>
+        </div>
+        <button @click="show = false" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+@endif
 <!-- Custom Borrow Confirmation Modal -->
 <div x-show="showBorrowModal" 
      x-cloak
@@ -484,13 +541,15 @@
             </div>
         </div>
         @endforeach
+         <!-- Pagination Top -->
+   
+
     </div>
-</div>
-    <!-- Pagination Top -->
-    <div class="mb-6">
+     <div class="mt-6">
         {{ $books->links() }}
     </div>
-
+</div>
+   
      
 </body>
 </html>

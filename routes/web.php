@@ -45,6 +45,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::get('/', [BorrowController::class, 'adminIndex'])->name('index');
         Route::patch('/{borrow}/return', [BorrowController::class, 'returnBook'])->name('return');
         Route::delete('/{borrow}', [BorrowController::class, 'destroy'])->name('destroy');
+        Route::get('/loan/{id}/invoice',[BorrowController::class,'DownloadInvoice'])->name('loan.invoice');
     });
 
 });
@@ -75,5 +76,8 @@ Route::prefix('buku')->name('buku.')->group(function () {
     Route::put('/{id}', [BukuController::class,'update'])->name('update');
     Route::delete('/{id}', [BukuController::class,'destroy'])->name('destroy');
 });
+
+
+Route::get('/loan/{id}/invoice',[BorrowController::class,'DownloadInvoice'])->name('loan.invoice');
 
 require __DIR__.'/auth.php';
