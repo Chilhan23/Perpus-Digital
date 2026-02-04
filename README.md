@@ -1,6 +1,7 @@
 # 📚 PerpusDigi - Digital Library System
 
 [![Laravel 12](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+
 **PerpusDigi** adalah platform manajemen perpustakaan digital modern yang dibangun untuk memberikan akses pengetahuan tanpa batas. Sistem ini mendukung manajemen buku, sistem peminjaman otomatis, hingga pembuatan invoice PDF secara real-time.
 
 ---
