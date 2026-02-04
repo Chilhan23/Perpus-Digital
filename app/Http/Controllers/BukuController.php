@@ -62,9 +62,9 @@ class BukuController extends Controller
      */
     public function edit(string $id)
     {
-        $buku = Books::all();
-        $bukudetail = Books::findOrfail($id);
-        return view('buku.index',compact('bukudetail'));
+        // $buku = Books::all();
+        // $bukudetail = Books::findOrfail($id);
+        // return view('buku.index',compact('bukudetail'));
     }
 
     /**

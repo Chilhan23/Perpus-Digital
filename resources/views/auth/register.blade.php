@@ -89,7 +89,7 @@
     </div>
 
     <!-- Include Navbar dari home.header -->
-    @include('home.header')
+    @include('layouts.Navbar')
 
     <!-- Main Content -->
     <div class="min-h-[calc(100vh-80px)] flex relative z-10 py-12">
@@ -130,10 +130,12 @@
                 
                 <!-- Mobile Logo & Title -->
                 <div class="lg:hidden text-center mb-8 animate-fade-in-down">
-                    <div class="inline-block w-24 h-24 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border-4 border-white/20 mb-6">
-                        <svg class="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
-                        </svg>
+                    <div class="flex justify-center mb-6">
+                        <div class="w-24 h-24 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border-4 border-white/20">
+                            <svg class="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                            </svg>
+                        </div>
                     </div>
                     <h2 class="text-3xl font-bold text-white mb-2">Perpustakaan Digital</h2>
                     <p class="text-white/80">Daftar akun baru</p>
@@ -303,7 +305,7 @@
                                 </a>
                             </p>
                         </div>
-                    </form>
+                    </form>     
                 </div>
 
                 <p class="text-center text-white/70 text-xs mt-6">

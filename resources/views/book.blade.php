@@ -71,7 +71,7 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-900 overflow-x-hidden" x-data="{ mobileMenuOpen: false }">
 
-@include('home.header')
+@include('layouts.Navbar')
 
 <div class="bg-white border-b border-gray-100/80">
     <div class="max-w-7xl mx-auto px-4 lg:px-6 py-4">

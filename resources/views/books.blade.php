@@ -171,7 +171,7 @@
     }
 }">
 
-@include('home.header')    
+@include('layouts.Navbar')    
 
 <!-- Custom Borrow Confirmation Modal -->
 <div x-show="showBorrowModal" 
@@ -407,7 +407,7 @@
                     @elseif($book->isBorrowed())
                     <div class="absolute top-4 left-4">
                         <span class="px-3 py-1 bg-red-400 text-red-900 text-xs font-bold rounded-full">
-                            ⚠️ Tidak Tersedia
+                            ⚠️ Tidak Tersedia (Dipinjam)
                         </span>
                     </div>
                     @endif
@@ -458,7 +458,7 @@
                             </button>
                         @elseif($book->isBorrowed())
                             <button disabled class="flex-1 px-4 py-2 bg-red-100 text-red-700 text-center rounded-lg font-semibold text-sm cursor-not-allowed">
-                                Tidak Tersedia
+                                Tidak Tersedia (Dipinjam)
                             </button>
                         @elseif(auth()->user()->is_admin)
                             <button disabled class="flex-1 px-4 py-2 bg-gray-300 text-gray-600 text-center rounded-lg cursor-not-allowed text-sm font-semibold">
@@ -486,6 +486,11 @@
         @endforeach
     </div>
 </div>
+    <!-- Pagination Top -->
+    <div class="mb-6">
+        {{ $books->links() }}
+    </div>
+
      
 </body>
 </html>

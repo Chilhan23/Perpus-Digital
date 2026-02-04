@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Buku - PerpusDigi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
@@ -131,7 +130,7 @@
     @endif
 
     <!-- Page Header -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-700 py-12">
+    <div class="bg-gradient-to-r from-white-600 to-white-700 py-12">
         <div class="max-w-7xl mx-auto px-4 lg:px-6">
             <div class="flex items-center justify-between">
                 <div>
