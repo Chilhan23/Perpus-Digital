@@ -138,7 +138,12 @@ class BorrowController extends Controller
    public function DownloadInvoice($id)
     {
     $borrow = Borrow::with(['user', 'book'])->findOrFail($id);
-    $pdf = Pdf::loadView('user.borrows.invoice', compact('borrow'));
-    return $pdf->download('Invoice-Peminjaman Buku Atas Nama '.$borrow->user->name.' .pdf');
+    if (Auth::user()->is_admin) {
+        $pdf = Pdf::loadView('admin.borrows.invoice', compact('borrow'));
+    } else {
+        $pdf = Pdf::loadView('user.borrows.invoice', compact('borrow'));
+    }
+    $fileName = 'Invoice-' . \Illuminate\Support\Str::slug($borrow->user->name) . '.pdf';
+    return $pdf->download($fileName);
     }
 }

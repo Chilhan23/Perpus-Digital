@@ -22,9 +22,9 @@ class Borrow extends Model
     ];
 
     protected $casts = [
-        'tanggal_pinjam' => 'date',
-        'tanggal_kembali' => 'date',
-        'tanggal_dikembalikan' => 'date',
+        'tanggal_pinjam' => 'datetime',
+        'tanggal_kembali' => 'datetime',
+        'tanggal_dikembalikan' => 'datetime',
     ];
 
     // Relasi ke User
@@ -39,26 +39,22 @@ class Borrow extends Model
         return $this->belongsTo(Books::class, 'book_id');
     }
 
-    // Scope untuk peminjaman aktif
     public function scopeActive($query)
     {
         return $query->where('status', 'dipinjam');
     }
 
-    // Scope untuk peminjaman yang sudah dikembalikan
     public function scopeReturned($query)
     {
         return $query->where('status', 'dikembalikan');
     }
 
-    // Scope untuk peminjaman terlambat
     public function scopeOverdue($query)
     {
         return $query->where('status', 'dipinjam')
                      ->where('tanggal_kembali', '<', now());
     }
 
-    // Accessor untuk hitung hari tersisa
     public function getDaysLeftAttribute()
     {
         if ($this->status == 'dikembalikan') {
@@ -68,7 +64,6 @@ class Borrow extends Model
         return Carbon::parse($this->tanggal_kembali)->diffInDays(now(), false);
     }
 
-    // Accessor untuk cek apakah terlambat
     public function getIsOverdueAttribute()
     {
         if ($this->status == 'dikembalikan') {

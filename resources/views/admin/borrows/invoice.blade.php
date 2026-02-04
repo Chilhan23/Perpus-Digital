@@ -69,9 +69,8 @@
                     <th width="10%">ID</th>
                     <th width="50%">Judul Buku</th>
                     <th width="20%">Kode Buku</th>
-                  <th width="20%">
-                    {{ $borrow->tanggal_dikembalikan ? 'Tanggal Dikembalikan' : 'Batas Kembali (Maksimal)' }}
-                </th>
+                    <th width="20%">Dikembalikan Tanggal</th>
+                    <th width="20%">{{ $borrow->denda ? 'Jumlah Denda' : '' }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,13 +81,16 @@
                         <small style="color: #64748b">Penulis: {{ $borrow->book->penulis }}</small>
                     </td>
                     <td><code>{{ $borrow->book->code }}</code></td>
-                    <td style="color: #6c44ef; font-weight: bold;">
+                    <td style="color: #2563eb; font-weight: bold;">
                         @if($borrow->tanggal_dikembalikan)
-                        {{ $borrow->tanggal_dikembalikan->format('d M Y') }}
+                            {{ $borrow->tanggal_dikembalikan->format('d M Y') }}
                         @else
-                        <span style="color: #ef4444;">{{ \Carbon\Carbon::parse($borrow->tanggal_kembali)->format('d M Y') }}</span>
+                            <span style="color: #ef4444;">Belum Dikembalikan</span>
                         @endif
-                        
+                    </td>
+
+                    <td style="color: #ef4444; font-weight: bold;">
+                        {{ $borrow->denda > 0 ? 'Rp ' . number_format($borrow->denda, 0, ',', '.') : '-' }}
                     </td>
                 </tr>
             </tbody>
