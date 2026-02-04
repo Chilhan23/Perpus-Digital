@@ -37,28 +37,23 @@
    cd Perpus-Digital ```
 
 2. **Install Dependencies**
-    ```
-    Bash
+    ```bash
     composer install
     npm install && npm run build
     ```
 
 3. **Konfigurasi Environment**
-```
-        Bash
+    ```bash
         cp .env.example .env
         php artisan key:generate
-```
+    ```
 
 4. **Setup Database Dan Seeding**
-    ```
-    Bash
-
-        php artisan migrate --seed
+    ```bash
+    php artisan migrate --seed
     ```
 5. **Run server**
-    ```
-    Bash
+    ```bash
     php artisan serve
     ```
 
