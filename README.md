@@ -11,18 +11,17 @@
 - **📖 Catalog Management**: Jelajahi koleksi buku dengan filter kategori dan pencarian yang responsif.
 - **⏳ Smart Borrowing**: Sistem peminjaman dengan limitasi (Max 3 buku) dan durasi otomatis 7 hari.
 - **📄 Pro Invoice Generator**: Download invoice peminjaman otomatis dalam format PDF dengan desain elegan.
-- **👑 Admin Dashboard**: Kelola buku, pantau status peminjaman (Dipinjam/Kembali/Terlambat), dan manajemen denda.
-- **📱 Ultra Responsive**: Tampilan kece di Laptop maupun HP (Thinkpad Tested!).
+- **👑 Admin Dashboard**: Kelola buku, pantau status peminjaman (Dipinjam/Kembali/Terlambat).
+- **📱 Ultra Responsive**: Tampilan kece di Laptop maupun HP.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend:** PHP 8.2+ & Laravel 11
+- **Backend:** Laravel 12
 - **Frontend:** Tailwind CSS & Alpine.js
 - **Database:** MySQL/MariaDB
 - **PDF Engine:** DomPDF
-- **Environment:** Developed on **Arch Linux** (Thinkpad T470s)
 
 ---
 
