@@ -34,8 +34,20 @@
     <!-- Page Header -->
     <div class="bg-gradient-to-r from-white-600 to-white-700 py-8 md:py-12">
         <div class="max-w-7xl mx-auto px-4 lg:px-6">
-            <h1 class="text-3xl md:text-4xl font-bold text-black mb-2">Kelola Peminjaman</h1>
-            <p class="text-sm md:text-base text-black-100">Manage semua peminjaman buku perpustakaan</p>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-black mb-2">Kelola Peminjaman</h1>
+                    <p class="text-sm md:text-base text-black-100">Manage semua peminjaman buku perpustakaan</p>
+                </div>
+                <div>
+                    <a href="{{ route('admin.borrows.laporan') }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-semibold text-sm transition-colors shadow-md hover:shadow-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download Laporan
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -224,6 +236,13 @@
                                     </a>
                                     @endif
                                     @if ($borrow->status == 'terlambat')
+                                    <form action="{{ route('admin.borrows.destroy', $borrow) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus record ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-semibold">
+                                            Hapus
+                                        </button>
+                                    </form>
                                          <a href="{{ route('admin.borrows.loan.invoice', $borrow->id) }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg font-semibold text-sm transition-colors border border-blue-200">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>

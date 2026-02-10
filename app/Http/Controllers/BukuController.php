@@ -38,7 +38,7 @@ class BukuController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|min:3',
-            'code' => 'required|min:5',
+            'code' => 'required|min:5|unique:books,code',
             'penulis' => 'required|min:3',
             'category_id' => 'required',
             'tahun_terbit' => 'required',
@@ -72,9 +72,9 @@ class BukuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-          $validated = $request->validate([
+    $validated = $request->validate([
         'judul' => 'required|min:3',
-        'code' => 'required|min:4',
+        'code' => 'required|min:4|unique:books,code,' . $id     ,
         'penulis' => 'required|min:3',
         'category_id' => 'required',
         'tahun_terbit' => 'required',
@@ -82,10 +82,7 @@ class BukuController extends Controller
     ]);
 
     $book = Books::findOrFail($id);
-
-
     $book->update($validated);
-
     return redirect()->route('buku.index')->with('success', 'Buku berhasil diupdate!');
     }
 

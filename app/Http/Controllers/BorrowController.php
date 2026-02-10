@@ -22,7 +22,7 @@ class BorrowController extends Controller
             ->paginate(10);
 
         $stats = [
-            'total' => $user->borrows()->count(),
+            'total' => $user->borrows()->count(), 
             'active' => $user->borrows()->where('status', 'dipinjam')->count(),
             'returned' => $user->borrows()->where('status', 'dikembalikan')->count(),
             'overdue' => $user->borrows()
@@ -138,12 +138,29 @@ class BorrowController extends Controller
    public function DownloadInvoice($id)
     {
     $borrow = Borrow::with(['user', 'book'])->findOrFail($id);
-    if (Auth::user()->is_admin) {
-        $pdf = Pdf::loadView('admin.borrows.invoice', compact('borrow'));
-    } else {
-        $pdf = Pdf::loadView('user.borrows.invoice', compact('borrow'));
+    //user checker if acces other invoice
+    $user = Auth::user();
+    if (!$user->is_admin && $user->id !== $borrow->user_id) {
+        abort(403, 'Akses ilegal! Aktivitas ini telah dicatat.'); 
     }
+    
+    $view = $user->is_admin ? 'admin.borrows.invoice' : 'user.borrows.invoice';
+    $pdf = Pdf::loadView($view, compact('borrow'));
     $fileName = 'Invoice-' . \Illuminate\Support\Str::slug($borrow->user->name) . '.pdf';
     return $pdf->download($fileName);
     }
+
+    public function BorrowData(){
+        $borrow = Borrow::with(['user','book'])->get();
+        $user = Auth::user();
+        if (!$user->is_admin) {
+            abort(403, 'Akses ilegal! Aktivitas ini telah dicatat.'); 
+        }
+
+        $pdf = Pdf::loadView('admin.borrows.laporan',compact('borrow'));
+        $fileName = 'Data Peminjaman'  . '.pdf';
+        return $pdf->download($fileName);
+    }
 }
+
+

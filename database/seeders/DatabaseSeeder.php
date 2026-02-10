@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
                 'Hikayat Hang Tuah' => 'Kepahlawanan seorang laksamana perkasa dari tanah Melayu yang sangat setia kepada raja dan bangsanya.',
                 'Cindelaras' => 'Anak laki-laki hebat dengan ayam jagonya yang sakti dalam perjuangan mencari keadilan dan mengakui jati dirinya.',
                 'Kisah Seribu Satu Malam' => 'Kumpulan dongeng legendaris penuh sihir dan petualangan dari Timur Tengah yang diceritakan oleh Syahrazad.',
-                'Dewi Sri dan Padi' => 'Mitos masyarakat agraris tentang asal-usul tanaman padi yang dianggap sebagai simbol kemakmuran dan keberkahan.',
+                'Dewi Sri dan 654' => 'Mitos masyarakat agraris tentang asal-usul tanaman padi yang dianggap sebagai simbol kemakmuran dan keberkahan.',
                 'Legenda Candi Prambanan' => 'Kisah cinta bertepuk sebelah tangan antara Bandung Bondowoso dan Roro Jonggrang yang berujung pada terciptanya seribu candi.',
                 'Kisah Jaka Tarub' => 'Cerita tentang seorang pemuda yang mencuri selendang bidadari dari kayangan demi mendapatkan istri yang cantik jelita.'
             ],

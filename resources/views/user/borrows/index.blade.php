@@ -73,40 +73,31 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            <div class="flex items-center gap-4">
-                                {{-- Tombol Download Invoice --}}
-                            {{-- <a href="{{ route('loan.invoice', $borrow->id) }}" 
-                            class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
-                                </svg>
-                                Invoice
-                            </a> --}}
-                            @if($borrow->status === 'dipinjam' && $borrow->created_at->diffInMinutes(now()) <= 10)
-                                <form method="POST" action="{{ route('borrows.cancel', $borrow) }}"
-                                    onsubmit="return confirm('Batalkan peminjaman?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="text-red-600 text-sm font-semibold hover:text-red-800">
-                                        Batalkan
-                                    </button>
-                                </form>
-                            @elseif($borrow->status === 'dipinjam')
-                            <span class="text-gray-400 text-xs">Tidak dapat dibatalkan</span>
-                            <a href="{{ route('loan.invoice', $borrow->id) }}"   class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
-                                </svg>
-                                Invoice
-                            </a>
-                            @elseif ($borrow->status === 'dikembalikan')
-                            <a href="{{ route('loan.invoice', $borrow->id) }}"   class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
-                                </svg>
-                                Invoice
-                            </a>
-                            @endif
+                            <div class="flex flex-wrap items-center gap-3">
+                                {{-- Tombol Invoice: Selalu muncul apapun statusnya --}}
+                                <a href="{{ route('loan.invoice', $borrow->id) }}" 
+                                class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-800 font-bold text-sm transition-colors bg-blue-50 px-3 py-1.5 rounded-md border border-blue-100">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+                                    </svg>
+                                    Invoice
+                                </a>
+
+                                {{-- Logika Tombol Batalkan --}}
+                                @if($borrow->status === 'dipinjam')
+                                    @if($borrow->created_at->diffInMinutes(now()) <= 10)
+                                        <form method="POST" action="{{ route('borrows.cancel', $borrow) }}"
+                                            onsubmit="return confirm('Batalkan peminjaman?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="text-red-600 text-sm font-semibold hover:text-red-800 border-l pl-3 border-slate-200">
+                                                Batalkan
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-slate-400 text-xs italic border-l pl-3 border-slate-200">Limit pembatalan habis</span>
+                                    @endif
+                                @endif
                             </div>
                         </td>
 
@@ -165,20 +156,32 @@
                 </div>
 
                 <!-- Action -->
-                @if($borrow->status === 'dipinjam' && $borrow->created_at->diffInMinutes(now()) <= 10)
-                    <form method="POST" action="{{ route('borrows.cancel', $borrow) }}" class="pt-3 border-t"
-                        onsubmit="return confirm('Batalkan peminjaman?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold">
-                            Batalkan Peminjaman
-                        </button>
-                    </form>
-                @elseif($borrow->status === 'dipinjam')
-                    <div class="pt-3 border-t">
-                        <p class="text-gray-400 text-xs text-center">Tidak dapat dibatalkan (lewat dari 10 menit)</p>
-                    </div>
-                @endif
+                <div class="mt-4 pt-3 border-t flex flex-col gap-2">
+                    {{-- Tombol Invoice Full Width --}}
+                    <a href="{{ route('loan.invoice', $borrow->id) }}" 
+                    class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-xl font-bold text-sm shadow-sm active:scale-95 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download Struk PDF
+                    </a>
+
+                    {{-- Tombol Batalkan (Jika memenuhi syarat) --}}
+                    @if($borrow->status === 'dipinjam' && $borrow->created_at->diffInMinutes(now()) <= 10)
+                        <form method="POST" action="{{ route('borrows.cancel', $borrow) }}"
+                            onsubmit="return confirm('Batalkan peminjaman?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="w-full px-4 py-2 bg-white text-red-600 border border-red-200 rounded-xl hover:bg-red-50 text-sm font-semibold">
+                                Batalkan Peminjaman
+                            </button>
+                        </form>
+                    @elseif($borrow->status === 'dipinjam')
+                        <p class="text-[10px] text-slate-400 text-center italic mt-1">
+                            Masa pembatalan (10 menit) sudah berakhir.
+                        </p>
+                    @endif
+                </div>
             </div>
             @empty
             <div class="bg-white rounded-lg shadow border p-8 text-center">

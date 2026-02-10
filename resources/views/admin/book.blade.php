@@ -99,35 +99,33 @@
     @endif
 
     <!-- Error Notification -->
-    @if(session('error'))
-    <div x-data="{ show: true }" 
-         x-show="show" 
-         x-init="setTimeout(() => show = false, 5000)"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 transform translate-y-2"
-         x-transition:enter-end="opacity-100 transform translate-y-0"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed top-24 right-4 z-50 max-w-sm">
-        <div class="bg-red-50 border-l-4 border-red-500 rounded-lg shadow-lg p-4 flex items-start gap-3">
-            <div class="flex-shrink-0">
-                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-            </div>
-            <div class="flex-1">
-                <h3 class="text-sm font-bold text-red-800">Error!</h3>
-                <p class="text-sm text-red-700 mt-1">{{ session('error') }}</p>
-            </div>
-            <button @click="show = false" class="flex-shrink-0 text-red-500 hover:text-red-700 transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
+  @if($errors->any())
+<div x-data="{ show: true }" 
+     x-show="show" 
+     x-init="setTimeout(() => show = false, 7000)"
+     class="fixed top-24 right-4 z-50 max-w-sm">
+    <div class="bg-red-50 border-l-4 border-red-500 rounded-lg shadow-lg p-4 flex items-start gap-3">
+        <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
         </div>
+        <div class="flex-1">
+            <h3 class="text-sm font-bold text-red-800">Ups! Ada Kesalahan:</h3>
+            <ul class="mt-1 ml-4 list-disc list-inside text-sm text-red-700">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <button @click="show = false" class="text-red-500 hover:text-red-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
     </div>
-    @endif
+</div>
+@endif
 
     <!-- Page Header -->
     <div class="bg-gradient-to-r from-white-600 to-white-700 py-12">

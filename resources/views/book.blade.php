@@ -140,9 +140,6 @@
 
                 <!-- Author Info -->
                 <div class="flex items-center">
-                    <img class="w-14 h-14 rounded-full border-2 border-white shadow-lg" 
-                         src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" 
-                         alt="{{ $book->penulis }}">
                     <div class="ml-4">
                         <p class="text-lg font-semibold text-gray-900">{{ $book->penulis }}</p>
                         <p class="text-sm text-gray-600">

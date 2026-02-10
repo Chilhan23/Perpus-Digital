@@ -33,6 +33,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/{book}', [BorrowController::class, 'store'])->name('store');
         Route::delete('/{borrow}/cancel', [BorrowController::class, 'cancel'])->name('cancel');
     });
+
+    Route::get('/loan/{id}/invoice',[BorrowController::class,'DownloadInvoice'])->name('loan.invoice');
+    
+
+
 });
 
 /*
@@ -46,6 +51,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::patch('/{borrow}/return', [BorrowController::class, 'returnBook'])->name('return');
         Route::delete('/{borrow}', [BorrowController::class, 'destroy'])->name('destroy');
         Route::get('/loan/{id}/invoice',[BorrowController::class,'DownloadInvoice'])->name('loan.invoice');
+        Route::get('/laporan',[BorrowController::class,'BorrowData'])->name('laporan');
     });
 
 });
@@ -77,7 +83,5 @@ Route::prefix('buku')->name('buku.')->group(function () {
     Route::delete('/{id}', [BukuController::class,'destroy'])->name('destroy');
 });
 
-
-Route::get('/loan/{id}/invoice',[BorrowController::class,'DownloadInvoice'])->name('loan.invoice');
 
 require __DIR__.'/auth.php';
