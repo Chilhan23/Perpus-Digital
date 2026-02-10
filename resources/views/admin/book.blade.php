@@ -128,22 +128,29 @@
 @endif
 
     <!-- Page Header -->
-    <div class="bg-gradient-to-r from-white-600 to-white-700 py-12">
-        <div class="max-w-7xl mx-auto px-4 lg:px-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-4xl font-bold text-blue-900 mb-2">Kelola Buku</h1>
-                    <p class="text-blue-800">Manage dan update koleksi buku perpustakaan</p>
-                </div>
-                <button @click="openAddModal()" class="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 group">
-                    <svg class="w-5 h-5 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    <div class="bg-gradient-to-r from-white-600 to-white-700 py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold text-blue mb-2">Kelola Buku</h1>
+                <p class="text-sm md:text-base text-blue mb-3 md:mb-0">Manage dan update koleksi buku perpustakaan</p>
+                <a href="{{ route('buku.laporan') }}" class="inline-flex items-center gap-2 text-blue-500 hover:text-blue-100 transition-colors text-sm font-medium mt-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    Tambah Buku
-                </button>
+                    Download Laporan Semua Buku
+                </a>
             </div>
+            <button @click="openAddModal()" class="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl flex items-center gap-2 group">
+                <svg class="w-5 h-5 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Tambah Buku
+            </button>
         </div>
     </div>
+</div>
+
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 lg:px-6 py-8">

@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exports\BookExport;
 use App\Models\Books;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -95,4 +98,13 @@ class BukuController extends Controller
         $bukudetail->delete();
         return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus!');
     }
+
+    public function export_excel()
+	{
+        $user = Auth::user();
+        if (!$user->is_admin) {
+            abort(403, 'Akses ilegal!.'); 
+        }
+		return Excel::download(new BookExport, 'buku.xlsx');
+	}
 }

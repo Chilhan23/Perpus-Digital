@@ -81,6 +81,7 @@ Route::prefix('buku')->name('buku.')->group(function () {
     Route::post('/', [BukuController::class,'store'])->name('store');
     Route::put('/{id}', [BukuController::class,'update'])->name('update');
     Route::delete('/{id}', [BukuController::class,'destroy'])->name('destroy');
+    Route::get('/laporan',[BukuController::class,'export_excel'])->name('laporan');
 });
 
 
