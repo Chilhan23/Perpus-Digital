@@ -89,8 +89,7 @@
     </div>
 
     <!-- Include Navbar dari home.header -->
-    @include('layouts.Navbar')
-
+    
     <!-- Main Content -->
     <div class="min-h-[calc(100vh-80px)] flex relative z-10 py-12">
         
